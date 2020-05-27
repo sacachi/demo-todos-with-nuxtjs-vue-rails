@@ -1,4 +1,5 @@
-export default {
-    newTodo: '',
-    todos: ['Coding', 'Vuex', 'Vuejs', 'Nuxtjs']
+export default function(){
+    return {
+        todos: []
+    }
 }

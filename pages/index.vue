@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-body">
             <ul class="list-group">
-              <li class="list-group-item" v-for="todo in todos" :key="todo" @dblclick="deleteTodo(todo)">{{ todo }}</li>
+              <li class="list-group-item" v-for="todo in todos" :key="todo.id" @dblclick="deleteTodo(todo)">{{ todo.todo }}</li>
             </ul>
 
             <form @submit.prevent="submit">
@@ -28,27 +28,25 @@ export default {
     todos(){
       return this.$store.state.todos;
     }
-
   },
   data(){
     return {
       newTodo: ''
     }
-  }
-  ,
+  },
+  mounted() {
+    this.$store.dispatch('setTodos');
+  },
   methods: {
     submit(){
       if (this.newTodo){
-        this.$store.commit('addTodo', this.newTodo);
-        this.newTodo = "";
-      } 
+        this.$store.dispatch('submitTodo', this.newTodo);
+        this.newTodo = '';
+      }
     },
     deleteTodo(todo){
-      this.$store.commit('deleteTodo', todo);
+      this.$store.dispatch('deleteTodo', todo);
     }
   }
 }
 </script>
-
-<style>
-</style>
