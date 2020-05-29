@@ -1,9 +1,17 @@
 <template>
-  <div>
+  <div class="container">
     <nuxt />
   </div>
 </template>
-
+<script>
+import firebase from 'firebase';
+export default {
+  middleware: "authenticated",
+  mounted(){
+    this.$store.dispatch("setData");
+  }
+}
+</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

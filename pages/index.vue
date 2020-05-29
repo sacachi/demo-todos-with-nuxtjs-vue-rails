@@ -1,519 +1,469 @@
 <template>
-  <div class="page-content page-container container">
+  <div class="page-content page-container">
     <div class="padding">
-        <div class="row container d-flex justify-content-center">
-            <div class="col-lg-12">
-                <div class="card px-3">
-                    <div class="card-body">
-                        <h4 class="card-title">Awesome Todo list</h4>
-                        <form @submit.prevent="submit">
-                          <div class="add-items d-flex"> 
-                            <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?" v-model="newTodo" > 
-                            <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button> </div>
-                        </form>
-                        <div class="list-wrapper">
-                          <ul class="d-flex flex-column-reverse todo-list">
-                              <li v-for="todo in todos" :key="todo.id" :class="{completed: todo.completed}">
-                                  <div class="form-check"> 
-                                    <label class="form-check-label"> 
-                                      <input class="checkbox" type="checkbox" :checked="todo.completed" @click="changeTodo(todo)"> {{ todo.todo }}
-                                      <i class="input-helper"></i>
-                                    </label> 
-                                  </div> 
-                                  <i class="remove mdi mdi-close-circle-outline" @click="deleteTodo(todo)"></i>
-                              </li>
-                          </ul>
-                        </div>
-                    </div>
+      <div class="row container d-flex justify-content-center">
+        <div class="col-lg-12">
+          <div class="card px-3">
+            <div class="card-body">
+              <h4 class="card-title">Awesome Todo list</h4>
+              <form @submit.prevent="submit">
+                <div class="add-items d-flex">
+                  <input
+                    type="text"
+                    class="form-control todo-list-input"
+                    placeholder="What do you need to do today?"
+                    v-model="newTodo"
+                  />
+                  <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
                 </div>
+              </form>
+              <div class="list-wrapper">
+                <ul class="d-flex flex-column-reverse todo-list">
+                  <li v-for="todo in todos" :key="todo.id" :class="{completed: todo.completed}">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="checkbox"
+                          type="checkbox"
+                          :checked="todo.completed"
+                          @click="changeTodo(todo)"
+                        />
+                        {{ todo.todo }}
+                        <i class="input-helper"></i>
+                      </label>
+                    </div>
+                    <i class="remove mdi mdi-close-circle-outline" @click="deleteTodo(todo)"></i>
+                  </li>
+                </ul>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 <script>
 export default {
   computed: {
-    todos(){
+    todos() {
       return this.$store.state.todos;
     }
   },
-  data(){
+  data() {
     return {
-      newTodo: ''
-    }
-  },
-  mounted() {
-    this.$store.dispatch('setTodos');
+      newTodo: ""
+    };
   },
   methods: {
-    submit(){
-      if (this.newTodo){
-        this.$store.dispatch('submitTodo', this.newTodo);
-        this.newTodo = '';
+    submit() {
+      if (this.newTodo) {
+        this.$store.dispatch("submitTodo", this.newTodo);
+        this.newTodo = "";
       }
     },
-    deleteTodo(todo){
-      this.$store.dispatch('deleteTodo', todo);
+    deleteTodo(todo) {
+      this.$store.dispatch("deleteTodo", todo);
     },
-    changeTodo(todo){
-      this.$store.dispatch('changeTodo', todo);
+    changeTodo(todo) {
+      this.$store.dispatch("changeTodo", todo);
     }
   }
-}
+};
 </script>
 <style>
- body {
-     background-color: #f9f9fa
- }
+body {
+  background-color: #f9f9fa;
+}
+.form-control {
+  border: 1px solid #f3f3f3;
+  font-weight: 400;
+  font-size: 0.875rem;
+}
 
- .flex {
-     -webkit-box-flex: 1;
-     -ms-flex: 1 1 auto;
-     flex: 1 1 auto
- }
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.375rem;
+  font-size: 1rem;
+  line-height: 1;
+  color: #495057;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
 
- @media (max-width:991.98px) {
-     .padding {
-         padding: 1.5rem
-     }
- }
+.add-items .btn {
+  margin-left: 0.5rem;
+}
 
- @media (max-width:767.98px) {
-     .padding {
-         padding: 1rem
-     }
- }
+.btn {
+  font-size: 0.875rem;
+  line-height: 1;
+  font-weight: 400;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.1275rem;
+}
 
- .padding {
-     padding: 5rem
- }
+.list-wrapper {
+  height: 100%;
+  max-height: 100%;
+}
 
- .card {
-     box-shadow: none;
-     -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-     -ms-box-shadow: none
- }
+.add-items {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
 
- .pl-3,
- .px-3 {
-     padding-left: 1rem !important
- }
+.add-items input[type="text"] {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+  background: transparent;
+}
 
- .card {
-     position: relative;
-     display: flex;
-     flex-direction: column;
-     min-width: 0;
-     word-wrap: break-word;
-     background-color: #fff;
-     background-clip: border-box;
-     border: 1px solid #d2d2dc;
-     border-radius: 0
- }
+.add-items .btn,
+.add-items .fc button,
+.fc .add-items button,
+.add-items .ajax-upload-dragdrop .ajax-file-upload,
+.ajax-upload-dragdrop .add-items .ajax-file-upload,
+.add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
+.swal2-modal .swal2-buttonswrapper .add-items .swal2-styled,
+.add-items .wizard > .actions a,
+.wizard > .actions .add-items a {
+  margin-left: 0.5rem;
+}
 
- .pr-3,
- .px-3 {
-     padding-right: 1rem !important
- }
+.rtl .add-items .btn,
+.rtl .add-items .fc button,
+.fc .rtl .add-items button,
+.rtl .add-items .ajax-upload-dragdrop .ajax-file-upload,
+.ajax-upload-dragdrop .rtl .add-items .ajax-file-upload,
+.rtl .add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
+.swal2-modal .swal2-buttonswrapper .rtl .add-items .swal2-styled,
+.rtl .add-items .wizard > .actions a,
+.wizard > .actions .rtl .add-items a {
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
 
- .card .card-body {
-     padding: 1.25rem 1.75rem
- }
+.list-wrapper {
+  height: 100%;
+  max-height: 100%;
+}
 
- .card-body {
-     flex: 1 1 auto;
-     padding: 1.25rem
- }
+.list-wrapper ul {
+  padding: 0;
+  text-align: left;
+  list-style: none;
+  margin-bottom: 0;
+}
 
- .card .card-title {
-     color: #000000;
-     margin-bottom: 0.625rem;
-     text-transform: capitalize;
-     font-size: 0.875rem;
-     font-weight: 500
- }
+.list-wrapper ul li {
+  font-size: 0.9375rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f3f3f3;
+}
 
- .add-items {
-     margin-bottom: 1.5rem;
-     overflow: hidden
- }
+.list-wrapper ul li:first-child {
+  border-bottom: none;
+}
 
- .d-flex {
-     display: flex !important
- }
+.list-wrapper ul li .form-check {
+  max-width: 90%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
 
- .add-items input[type="text"] {
-     border-top-right-radius: 0;
-     border-bottom-right-radius: 0;
-     width: 100%;
-     background: transparent
- }
+.list-wrapper ul li .form-check label:hover {
+  cursor: pointer;
+}
 
- .form-control {
-     border: 1px solid #f3f3f3;
-     font-weight: 400;
-     font-size: 0.875rem
- }
+.list-wrapper input[type="checkbox"] {
+  margin-right: 15px;
+}
 
- .form-control {
-     display: block;
-     width: 100%;
-     padding: 0.875rem 1.375rem;
-     font-size: 1rem;
-     line-height: 1;
-     color: #495057;
-     background-color: #ffffff;
-     background-clip: padding-box;
-     border: 1px solid #ced4da;
-     border-radius: 2px;
-     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
- }
+.list-wrapper .remove {
+  cursor: pointer;
+  font-size: 1.438rem;
+  font-weight: 600;
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 20px;
+  text-align: center;
+}
 
- .add-items .btn {
-     margin-left: .5rem
- }
+.list-wrapper .completed {
+  text-decoration: line-through;
+  text-decoration-color: #3da5f4;
+}
 
- .btn {
-     font-size: 0.875rem;
-     line-height: 1;
-     font-weight: 400;
-     padding: .7rem 1.5rem;
-     border-radius: 0.1275rem
- }
+.list-wrapper ul li .form-check {
+  max-width: 90%;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
 
- .list-wrapper {
-     height: 100%;
-     max-height: 100%
- }
+.list-wrapper ul li .form-check,
+.list-wrapper ul li .form-check .form-check-label,
+.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
+.email-wrapper
+  .mail-sidebar
+  .menu-bar
+  .profile-list-item
+  a
+  .user
+  .u-designation,
+.email-wrapper .mail-list-container .mail-list .content .sender-name,
+.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
+.settings-panel .chat-list .list .info p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+}
 
- .add-items {
-     margin-bottom: 1.5rem;
-     overflow: hidden
- }
+.form-check {
+  position: relative;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 0;
+}
 
- .add-items input[type="text"] {
-     border-top-right-radius: 0;
-     border-bottom-right-radius: 0;
-     width: 100%;
-     background: transparent
- }
+.list-wrapper ul li .form-check,
+.list-wrapper ul li .form-check .form-check-label,
+.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
+.email-wrapper
+  .mail-sidebar
+  .menu-bar
+  .profile-list-item
+  a
+  .user
+  .u-designation,
+.email-wrapper .mail-list-container .mail-list .content .sender-name,
+.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
+.settings-panel .chat-list .list .info p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+}
 
- .add-items .btn,
- .add-items .fc button,
- .fc .add-items button,
- .add-items .ajax-upload-dragdrop .ajax-file-upload,
- .ajax-upload-dragdrop .add-items .ajax-file-upload,
- .add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
- .swal2-modal .swal2-buttonswrapper .add-items .swal2-styled,
- .add-items .wizard>.actions a,
- .wizard>.actions .add-items a {
-     margin-left: .5rem
- }
+.form-check .form-check-label {
+  min-height: 18px;
+  display: block;
+  margin-left: 1.75rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
 
- .rtl .add-items .btn,
- .rtl .add-items .fc button,
- .fc .rtl .add-items button,
- .rtl .add-items .ajax-upload-dragdrop .ajax-file-upload,
- .ajax-upload-dragdrop .rtl .add-items .ajax-file-upload,
- .rtl .add-items .swal2-modal .swal2-buttonswrapper .swal2-styled,
- .swal2-modal .swal2-buttonswrapper .rtl .add-items .swal2-styled,
- .rtl .add-items .wizard>.actions a,
- .wizard>.actions .rtl .add-items a {
-     margin-left: auto;
-     margin-right: .5rem
- }
+.form-check-label {
+  margin-bottom: 0;
+}
 
- .list-wrapper {
-     height: 100%;
-     max-height: 100%
- }
+.list-wrapper input[type="checkbox"] {
+  margin-right: 15px;
+}
 
- .list-wrapper ul {
-     padding: 0;
-     text-align: left;
-     list-style: none;
-     margin-bottom: 0
- }
+.form-check .form-check-label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 0;
+  margin-top: 0;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
 
- .list-wrapper ul li {
-     font-size: .9375rem;
-     padding: .4rem 0;
-     border-bottom: 1px solid #f3f3f3
- }
+input[type="radio"],
+input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
 
- .list-wrapper ul li:first-child {
-     border-bottom: none
- }
+.list-wrapper ul li .form-check,
+.list-wrapper ul li .form-check .form-check-label,
+.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
+.email-wrapper
+  .mail-sidebar
+  .menu-bar
+  .profile-list-item
+  a
+  .user
+  .u-designation,
+.email-wrapper .mail-list-container .mail-list .content .sender-name,
+.email-wrapper .message-body .attachments-sections ul li .details p.file-name,
+.settings-panel .chat-list .list .info p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+}
 
- .list-wrapper ul li .form-check {
-     max-width: 90%;
-     margin-top: .25rem;
-     margin-bottom: .25rem
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  border: solid #405189;
+  border-width: 2px;
+  -webkit-transition: all;
+  -moz-transition: all;
+  -ms-transition: all;
+  -o-transition: all;
+  transition: all;
+  transition-duration: 0s;
+  -webkit-transition-duration: 250ms;
+  transition-duration: 250ms;
+}
 
- .list-wrapper ul li .form-check label:hover {
-     cursor: pointer
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:before,
+.form-check .form-check-label input[type="checkbox"] + .input-helper:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
- .list-wrapper input[type="checkbox"] {
-     margin-right: 15px
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:after {
+  -webkit-transition: all;
+  -moz-transition: all;
+  -ms-transition: all;
+  -o-transition: all;
+  transition: all;
+  transition-duration: 0s;
+  -webkit-transition-duration: 250ms;
+  transition-duration: 250ms;
+  font-family: Material Design Icons;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
+  content: "\F12C";
+  font-size: 0.9375rem;
+  font-weight: bold;
+  color: #ffffff;
+}
 
- .list-wrapper .remove {
-     cursor: pointer;
-     font-size: 1.438rem;
-     font-weight: 600;
-     width: 1.25rem;
-     height: 1.25rem;
-     line-height: 20px;
-     text-align: center
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:before,
+.form-check .form-check-label input[type="checkbox"] + .input-helper:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 
- .list-wrapper .completed {
-     text-decoration: line-through;
-     text-decoration-color: #3da5f4
- }
+.form-check
+  .form-check-label
+  input[type="checkbox"]:checked
+  + .input-helper:before {
+  background: #405189;
+  border-width: 0;
+}
 
- .list-wrapper ul li .form-check {
-     max-width: 90%;
-     margin-top: .25rem;
-     margin-bottom: .25rem
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+  border: solid #405189;
+  border-width: 2px;
+  -webkit-transition: all;
+  -moz-transition: all;
+  -ms-transition: all;
+  -o-transition: all;
+  transition: all;
+  transition-duration: 0s;
+  -webkit-transition-duration: 250ms;
+  transition-duration: 250ms;
+}
 
- .list-wrapper ul li .form-check,
- .list-wrapper ul li .form-check .form-check-label,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
- .email-wrapper .mail-list-container .mail-list .content .sender-name,
- .email-wrapper .message-body .attachments-sections ul li .details p.file-name,
- .settings-panel .chat-list .list .info p {
-     text-overflow: ellipsis;
-     overflow: hidden;
-     max-width: 100%;
-     white-space: nowrap
- }
+.form-check .form-check-label input[type="checkbox"] + .input-helper:after {
+  font-family: FontAwesome;
+  content: "\f095";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  color: #fff;
+}
 
- .form-check {
-     position: relative;
-     display: block;
-     margin-top: 10px;
-     margin-bottom: 10px;
-     padding-left: 0
- }
+.text-primary,
+.list-wrapper .completed .remove {
+  color: #405189 !important;
+}
 
- .list-wrapper ul li .form-check,
- .list-wrapper ul li .form-check .form-check-label,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
- .email-wrapper .mail-list-container .mail-list .content .sender-name,
- .email-wrapper .message-body .attachments-sections ul li .details p.file-name,
- .settings-panel .chat-list .list .info p {
-     text-overflow: ellipsis;
-     overflow: hidden;
-     max-width: 100%;
-     white-space: nowrap
- }
+.list-wrapper .remove {
+  cursor: pointer;
+  font-size: 1.438rem;
+  font-weight: 600;
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 20px;
+  text-align: center;
+}
 
- .form-check .form-check-label {
-     min-height: 18px;
-     display: block;
-     margin-left: 1.75rem;
-     font-size: 0.875rem;
-     line-height: 1.5
- }
+.ml-auto,
+.list-wrapper .remove,
+.mx-auto {
+  margin-left: auto !important;
+}
 
- .form-check-label {
-     margin-bottom: 0
- }
+.mdi-close-circle-outline:before {
+  content: "\F15A";
+}
 
- .list-wrapper input[type="checkbox"] {
-     margin-right: 15px
- }
+.list-wrapper ul li {
+  font-size: 0.9375rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f3f3f3;
+}
 
- .form-check .form-check-label input {
-     position: absolute;
-     top: 0;
-     left: 0;
-     margin-left: 0;
-     margin-top: 0;
-     z-index: 1;
-     cursor: pointer;
-     opacity: 0;
-     filter: alpha(opacity=0)
- }
+.mdi:before {
+  font-family: FontAwesome;
+  content: "\f00d";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-size: 0.756em;
+  color: #405189;
+}
 
- input[type="radio"],
- input[type="checkbox"] {
-     box-sizing: border-box;
-     padding: 0
- }
+.list-wrapper ul {
+  padding: 0;
+  text-align: left;
+  list-style: none;
+  margin-bottom: 0;
+}
 
- .list-wrapper ul li .form-check,
- .list-wrapper ul li .form-check .form-check-label,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-name,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user .u-designation,
- .email-wrapper .mail-list-container .mail-list .content .sender-name,
- .email-wrapper .message-body .attachments-sections ul li .details p.file-name,
- .settings-panel .chat-list .list .info p {
-     text-overflow: ellipsis;
-     overflow: hidden;
-     max-width: 100%;
-     white-space: nowrap
- }
+.flex-column-reverse {
+  flex-direction: column-reverse !important;
+}
 
- .form-check .form-check-label input[type="checkbox"]+.input-helper:before {
-     content: "";
-     width: 18px;
-     height: 18px;
-     border-radius: 2px;
-     border: solid #405189;
-     border-width: 2px;
-     -webkit-transition: all;
-     -moz-transition: all;
-     -ms-transition: all;
-     -o-transition: all;
-     transition: all;
-     transition-duration: 0s;
-     -webkit-transition-duration: 250ms;
-     transition-duration: 250ms
- }
-
- .form-check .form-check-label input[type="checkbox"]+.input-helper:before,
- .form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-     position: absolute;
-     top: 0;
-     left: 0
- }
-
- .form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-     -webkit-transition: all;
-     -moz-transition: all;
-     -ms-transition: all;
-     -o-transition: all;
-     transition: all;
-     transition-duration: 0s;
-     -webkit-transition-duration: 250ms;
-     transition-duration: 250ms;
-     font-family: Material Design Icons;
-     opacity: 0;
-     filter: alpha(opacity=0);
-     -webkit-transform: scale(0);
-     -ms-transform: scale(0);
-     -o-transform: scale(0);
-     transform: scale(0);
-     content: '\F12C';
-     font-size: .9375rem;
-     font-weight: bold;
-     color: #ffffff
- }
-
- .form-check .form-check-label input[type="checkbox"]+.input-helper:before,
- .form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-     position: absolute;
-     top: 0;
-     left: 0
- }
-
- .form-check .form-check-label input[type="checkbox"]:checked+.input-helper:before {
-     background: #405189;
-     border-width: 0
- }
-
- .form-check .form-check-label input[type="checkbox"]+.input-helper:before {
-     content: "";
-     width: 18px;
-     height: 18px;
-     border-radius: 2px;
-     border: solid #405189;
-     border-width: 2px;
-     -webkit-transition: all;
-     -moz-transition: all;
-     -ms-transition: all;
-     -o-transition: all;
-     transition: all;
-     transition-duration: 0s;
-     -webkit-transition-duration: 250ms;
-     transition-duration: 250ms
- }
-
- .form-check .form-check-label input[type="checkbox"]+.input-helper:after {
-     font-family: FontAwesome;
-     content: "\f095";
-     display: inline-block;
-     padding-right: 3px;
-     vertical-align: middle;
-     color: #fff
- }
-
- .text-primary,
- .list-wrapper .completed .remove {
-     color: #405189 !important
- }
-
- .list-wrapper .remove {
-     cursor: pointer;
-     font-size: 1.438rem;
-     font-weight: 600;
-     width: 1.25rem;
-     height: 1.25rem;
-     line-height: 20px;
-     text-align: center
- }
-
- .ml-auto,
- .list-wrapper .remove,
- .mx-auto {
-     margin-left: auto !important
- }
-
- .mdi-close-circle-outline:before {
-     content: "\F15A"
- }
-
- .list-wrapper ul li {
-     font-size: .9375rem;
-     padding: .4rem 0;
-     border-bottom: 1px solid #f3f3f3
- }
-
- .mdi:before {
-     font-family: FontAwesome;
-     content: "\f00d";
-     display: inline-block;
-     padding-right: 3px;
-     vertical-align: middle;
-     font-size: .756em;
-     color: #405189
- }
-
- .list-wrapper ul {
-     padding: 0;
-     text-align: left;
-     list-style: none;
-     margin-bottom: 0
- }
-
- .flex-column-reverse {
-     flex-direction: column-reverse !important
- }
-
- .d-flex,
- .loader-demo-box,
- .distribution-chart-legend .distribution-chart,
- .distribution-chart-legend .distribution-chart .item,
- .list-wrapper ul li,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a,
- .email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user,
- .email-wrapper .mail-list-container .mail-list .details,
- .email-wrapper .message-body .attachments-sections ul li .thumb,
- .email-wrapper .message-body .attachments-sections ul li .details .buttons,
- .lightGallery .image-tile .demo-gallery-poster,
- .swal2-modal,
- .navbar .navbar-menu-wrapper .navbar-nav,
- .navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile,
- .navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown .dropdown-item {
-     display: flex !important
- }
+.d-flex,
+.loader-demo-box,
+.distribution-chart-legend .distribution-chart,
+.distribution-chart-legend .distribution-chart .item,
+.list-wrapper ul li,
+.email-wrapper .mail-sidebar .menu-bar .profile-list-item a,
+.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user,
+.email-wrapper .mail-list-container .mail-list .details,
+.email-wrapper .message-body .attachments-sections ul li .thumb,
+.email-wrapper .message-body .attachments-sections ul li .details .buttons,
+.lightGallery .image-tile .demo-gallery-poster,
+.swal2-modal,
+.navbar .navbar-menu-wrapper .navbar-nav,
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile,
+.navbar
+  .navbar-menu-wrapper
+  .navbar-nav
+  .nav-item.dropdown
+  .navbar-dropdown
+  .dropdown-item {
+  display: flex !important;
+}
 </style>
